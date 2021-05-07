@@ -1,4 +1,14 @@
 module.exports = {
+  mode: 'jit',
+  // purge: [
+  //   'src/**/*.*',
+  // ],
+  purge: {
+    enabled: true,
+    content: [
+      'src/**/*.*',
+    ],
+  },
   theme: {
     screens: {
       sm: {max: '600px'},

@@ -1,56 +1,38 @@
-<div align="center">
-  <p><a href="https://maizzle.com" target="_blank"><img src="https://res.cloudinary.com/maizzle/image/upload/v1553710263/maizzle.svg" width="200" alt="Maizzle"></a></p>
-  <p>HTML email development framework</p>
-  <div>
-
-  [![Version][npm-version-shield]][npm]
-  [![Build][github-ci-shield]][github-ci]
-  [![Downloads][npm-stats-shield]][npm-stats]
-  [![License][license-shield]][license]
-
-  </div>
-</div>
-
 ## About
 
-Maizzle is a framework that helps you quickly build HTML emails with [Tailwind CSS](https://tailwindcss.com/).
+This repo reproduces the issue described here:
+
+https://github.com/tailwindlabs/tailwindcss/issues/4094
 
 ## Getting Started
+
+1. Make sure you have the Maizzle CLI installed:
 
 ```sh
 # install the CLI globally
 npm i -g @maizzle/cli
+```
 
-# create project wizard
-maizzle new
+2. Clone this repo:
 
-# open it in your editor
-cd maizzle && code .
+```sh
+git clone https://github.com/maizzle/jit-object-config
+```
 
-# start development
-maizzle serve
+3. `npm install` dependencies
 
-# build for production
+4. Build for production:
+
+```sh
 maizzle build production
 ```
 
-## Documentation
+The build should hang.
 
-Maizzle documentation is available at https://maizzle.com
+If you edit `tailwind.config.js` and use the simplified array syntax `purge` instead of the object one, it'll work.
 
-## Issues
+To check the Tailwind config object that is being used, you can edit `node_modules/@maizzle/framework/src/generators/tailwindcss.js` and add this just before the `return` statement:
 
-Please open all issues in the [framework repository](https://github.com/maizzle/framework).
-
-## License
-
-The Maizzle framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-[npm]: https://www.npmjs.com/package/@maizzle/framework
-[npm-stats]: https://npm-stat.com/charts.html?package=%40maizzle%2Fframework&from=2019-03-27
-[npm-version-shield]: https://img.shields.io/npm/v/@maizzle/framework.svg?style=flat-square
-[npm-stats-shield]: https://img.shields.io/npm/dt/@maizzle/framework.svg?style=flat-square&color=6875f5
-[github-ci]: https://github.com/maizzle/framework/actions
-[github-ci-shield]: https://img.shields.io/github/workflow/status/maizzle/cli/Node.js%20CI?style=flat-square
-[license]: ./LICENSE
-[license-shield]: https://img.shields.io/npm/l/@maizzle/framework.svg?style=flat-square&color=0e9f6e
+```js
+console.log(merge(coreConfig, tailwindConfigObject))
+```
